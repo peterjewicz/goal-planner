@@ -1,2 +1,91 @@
 /* some style */
 
+
+
+/* GLOBAL STYLES */
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  background: #e9f1fc;
+  color: #474747;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {font-size: 2.5rem;}
+h2 {font-size: 2rem;}
+h3 {font-size: 1.5rem;}
+h4 {font-size: 1.25rem;}
+
+
+.Main {
+  position: relative;
+}
+
+.View {
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.ViewPage {
+  position: absolute;
+  transition: all .25s;
+  top: 0;
+  left: -150%;
+  background: #e9f1fc;
+  min-width: 100%;
+  min-height: 100%;
+}
+.ViewPage.visible {
+  left: 0;
+}
+
+.borderText {
+  border-bottom: 2px solid #2f8ffb;
+  width: 35%;
+}
+
+input {
+  background: #f8fbff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 1.15rem;
+}
+
+input.timelineInput {
+  width: 30px;
+}
+
+
+
+/* HOME PAGE STYLES */
+
+
+.Home .addGoalButton{
+  background: #5fa996;
+  width: 120px;
+  height: 50px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  line-height: 50px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .25s;
+}
+
+
+.Home .addGoalButton:hover {
+  filter: brightness(85%);
+}
+
+
+
+/* NEW GOAL BUTTON */
+.timelineItem {
+  display: flex;
+  padding: 12px;
+}

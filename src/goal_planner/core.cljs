@@ -1,5 +1,9 @@
 (ns goal-planner.core
-    (:require [reagent.core :as reagent :refer [atom]]))
+    (:require [reagent.core :as reagent :refer [atom]]
+              [goal-planner.components.home :as home]
+              [goal-planner.state.state :refer [state handle-state-change]]
+              [goal-planner.components.newgoal :as newgoal]))
+
 
 (enable-console-print!)
 
@@ -10,12 +14,13 @@
 (defonce app-state (atom {:text "Hello world!"}))
 
 
-(defn hello-world []
-  [:div
-   [:h1 (:text @app-state)]
-   [:h3 "Edit this and watch it change!"]])
+(defn Main []
+  [:div.Main
+   [home/render]
+   [newgoal/render state]])
 
-(reagent/render-component [hello-world]
+
+(reagent/render-component [Main]
                           (. js/document (getElementById "app")))
 
 (defn on-js-reload [])
