@@ -27,26 +27,28 @@
 )
 
 (defn render [state]
-  (let [details (atom {:title "" :criteria "" :days 0 :weeks 0 :years 1
+  (let [details (atom {:title "" :criteria "" :current 0
+                       :days 0 :weeks 0 :years 1
                        :milestones []})]
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
-          [:p {:on-click #(handle-state-change "update-current-view" "home")} "Back"]]
+          [:p {:on-click #(handle-state-change "update-current-view" "home")} "<- Back"]
+          [:p "Add New Goal"]]
         [:h2 "I Want To..."]
         [:input {:type "Text" :placeholder "Goal Name" :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
-        [:h3.borderText "Goal Value"]
+        [:h3.borderText "Goal Completion"]
         [:input {:type "Text" :placeholder "End Criteria" :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Timeline"]
         [:div.timelineItem
           [:input.timelineInput {:type "text" :on-change #(swap! details conj {:days (-> % .-target .-value)})}]
-          [:p "Days"]]
+          [:p.timelineLabel "Days"]]
         [:div.timelineItem
           [:input.timelineInput {:type "text" :on-change #(swap! details conj {:weeks (-> % .-target .-value)})}]
-          [:p "Weeks"]]
+          [:p.timelineLabel "Weeks"]]
         [:div.timelineItem
            [:input.timelineInput {:type "text" :defaultValue 1 :on-change #(swap! details conj {:years (-> % .-target .-value)})}]
-           [:p "years"]]
+           [:p.timelineLabel "years"]]
         [:div.milestonesWrapper
           [:h3.borderText "Milestones"]
           (if (<  0 (count (:criteria @details)))
