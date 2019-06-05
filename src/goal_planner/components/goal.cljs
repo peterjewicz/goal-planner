@@ -11,5 +11,4 @@
     [:div.Goal.right
       [:div.Goal.bar
         [:div.Goal.bar.filled {:style {:width (str (generate-percent (:current goal) (:criteria goal)) "%")}}]]
-      [:p (str (generate-percent (:current goal) (:criteria goal)) "%")]]
-])
+      [:p (str (generate-percent (:current goal) (:criteria goal)) "%")]]])

@@ -24,6 +24,7 @@
 
 (defn remove-milestone [details index]
   "removes a milestone by removing index from details and rebalancing"
+  (print index)
 )
 
 (defn render [state]
@@ -54,7 +55,13 @@
           (if (<  0 (count (:criteria @details)))
             (let [milestones (:milestones @details)]
               (doall (map-indexed (fn [index milestone]
-                [:p {:key index} (str (:date milestone) " - "(:value milestone))] ) milestones))))]
-        [:button {:on-click #(save-goal details)} "Save Goal"]])))
+                [:div.milestoneItem {:key index}
+                  [:input.milestoneDate {:type "text" :defaultValue (:date milestone)}]
+                  [:input.milestoneValue {:type "text" :defaultValue (:value milestone)}]
+                  [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
+              ) milestones)))
+            [:button.addMilestone.secondary "+"]
+          )]
+        [:button.primary.saveGoal {:on-click #(save-goal details)} "Save Goal"]])))
 
 
