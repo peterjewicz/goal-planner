@@ -25,6 +25,12 @@
 (defn remove-milestone [details index]
   "removes a milestone by removing index from details and rebalancing"
   (print index)
+  (let [milestones (:milestones @details)]
+  (print (concat (subvec milestones 0 index)
+            (subvec milestones (inc index))))
+  (swap! details conj {:milestones (into [](concat (subvec milestones 0 index)
+            (subvec milestones (inc index))))} )
+)
 )
 
 (defn render [state]
@@ -54,8 +60,10 @@
           [:h3.borderText "Milestones"]
           (if (<  0 (count (:criteria @details)))
             (let [milestones (:milestones @details)]
+              (print milestones)
               (doall (map-indexed (fn [index milestone]
-                [:div.milestoneItem {:key index}
+                (print milestone)
+                [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
                   [:input.milestoneDate {:type "text" :defaultValue (:date milestone)}]
                   [:input.milestoneValue {:type "text" :defaultValue (:value milestone)}]
                   [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
