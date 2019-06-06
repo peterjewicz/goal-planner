@@ -29,6 +29,16 @@
   (swap! details conj {:milestones (into [](concat (subvec milestones 0 index)
             (subvec milestones (inc index))))})))
 
+
+
+(defn update-milestone-date [index details value]
+  "Updates the date value of a milestone at 'index'"
+    (swap! details assoc-in [:milestones index :date] value))
+
+(defn update-milestone-value [index details value]
+  "updates value of a milestone at 'index'"
+  (swap! details assoc-in [:milestones index :value] value))
+
 (defn render [state]
   (let [details (atom {:title "" :criteria "" :current 0
                        :days 0 :weeks 0 :years 1
@@ -58,8 +68,8 @@
             (let [milestones (:milestones @details)]
               (doall (map-indexed (fn [index milestone]
                 [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
-                  [:input.milestoneDate {:type "text" :defaultValue (:date milestone)}]
-                  [:input.milestoneValue {:type "text" :defaultValue (:value milestone)}]
+                  [:input.milestoneDate {:type "text" :on-change #(update-milestone-date index details (-> % .-target .-value)) :defaultValue (:date milestone)}]
+                  [:input.milestoneValue {:type "text" :on-change #(update-milestone-value index details (-> % .-target .-value)) :defaultValue (:value milestone)}]
                   [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
               ) milestones))))
           (if (<  0 (count (:criteria @details))) ; TODO make this wrapped in the one above
