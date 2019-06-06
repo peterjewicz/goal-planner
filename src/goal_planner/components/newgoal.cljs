@@ -2,12 +2,12 @@
   (:require [reagent.core :as reagent :refer [atom]]
             [goal-planner.state.state :refer [handle-state-change]]
             [goal-planner.scripts.dates :refer [get-date-by-days]]
+            [goal-planner.scripts.localforageApi :as api]
             ["moment" :as moment]))
 
 (defn save-goal [goal]
   "Saves our goal to localStorage"
-  (print (:milestones @goal))
-  (print (get-date-by-days 2)))
+  (api/add-goal @goal))
 
 (defn generate-default-milestones [details value]
   "generates 4 default milestones based on goal"
@@ -29,11 +29,9 @@
   (swap! details conj {:milestones (into [](concat (subvec milestones 0 index)
             (subvec milestones (inc index))))})))
 
-
-
-(defn update-milestone-date [index details value]
+(defn update-milestone-date [index details value] ; TODO we can turn this into an ....-field by passing which key to find
   "Updates the date value of a milestone at 'index'"
-    (swap! details assoc-in [:milestones index :date] value))
+    (swap! details assoc-in [:milestones index (key "date")] value)) ; TODO see if this works!
 
 (defn update-milestone-value [index details value]
   "updates value of a milestone at 'index'"
