@@ -7,10 +7,11 @@
 (defonce state (atom {:activeView {  ; This gets erased as state changes but I left it here as a reminder for expected values
                                    :home "visible"
                                    :newgoal false
-                                   :goal false}
+                                   :goalpage false}
                        :goals []
                        :milestones []
-                       :progress []}))
+                       :progress []
+                       :activeGoal {}}))
 
 
 (defn update-current-view [payload]
@@ -19,6 +20,9 @@
 
 (defn update-goals [goals]
   (swap! state conj {:goals goals}))
+
+(defn update-active-goal [goal]
+  (swap! state conj {:activeGoal goal}))
 
 
 ; (defn update-state-item [payload]

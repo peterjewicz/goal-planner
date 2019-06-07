@@ -16,7 +16,7 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.app {
+#app, .Main {
   height: 100%;
 }
 
@@ -242,4 +242,19 @@ button.secondary:hover {
   position: absolute;
   left: 0;
   top: 0;
+}
+
+
+/* GOAL PAGE STYLES */
+.GoalPage.header {
+  display: flex;
+}
+
+.GoalPage.header p {
+  width: 33%;
+}
+
+.GoalPage.header p:not(:first-of-type) {
+  text-align: center;
+  font-weight: 600;
 }
