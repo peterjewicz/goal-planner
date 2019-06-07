@@ -200,10 +200,21 @@ button.secondary:hover {
 
 .Goal {
   display: flex;
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.Goal:hover {
+  background: #d1e2fa;
 }
 
 .Goal.left {
   width: 40%;
+  text-align: center;
+}
+
+.Goal.left h3 {
+  width: 100%;
 }
 
 .Goal.right {

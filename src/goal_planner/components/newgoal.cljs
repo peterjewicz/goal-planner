@@ -5,9 +5,17 @@
             [goal-planner.scripts.localforageApi :as api]
             ["moment" :as moment]))
 
+(defn check-string-blank [string]
+  "returns bool based on if a string is blank or not"
+  (if (clojure.string/blank? string)
+    false
+    true))
+
 (defn save-goal [goal]
   "Saves our goal to localStorage"
-  (api/add-goal @goal))
+  (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal)))
+     (api/add-goal @goal)
+     (js/alert "Compleition and Title are Required")))
 
 (defn generate-default-milestones [details value]
   "generates 4 default milestones based on goal"
@@ -31,7 +39,7 @@
 
 (defn update-milestone-date [index details value] ; TODO we can turn this into an ....-field by passing which key to find
   "Updates the date value of a milestone at 'index'"
-    (swap! details assoc-in [:milestones index (key "date")] value)) ; TODO see if this works!
+    (swap! details assoc-in [:milestones index :date] value))
 
 (defn update-milestone-value [index details value]
   "updates value of a milestone at 'index'"
@@ -40,7 +48,8 @@
 (defn render [state]
   (let [details (atom {:title "" :criteria "" :current 0
                        :days 0 :weeks 0 :years 1
-                       :milestones []})]
+                       :milestones []
+                       :progress []})]
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header

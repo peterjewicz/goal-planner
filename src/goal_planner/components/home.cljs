@@ -4,14 +4,13 @@
             [goal-planner.components.goal :as goal]))
 
 
-(defn render []
+(defn render [state]
   [:div.Home.View
     [:div.Home.header
-      [:p "Your Goals"]
-    ]
-    [goal/render "Title" {:current 30 :criteria 90}]
-    [goal/render "Title" {:current 20 :criteria 90}]
-    [goal/render "Title" {:current 60 :criteria 90}]
-    [goal/render "Title" {:current 10 :criteria 90}]
+      [:p "Your Goals"]]
+    (doall (for [goal (:goals @state)]
+      [:div {:key (:title goal)}
+        [goal/render (:title goal) {:current 0.5 :criteria (:criteria goal)}] ; TODO we need a way to track progress!
+    ]))
     [:p.addGoalButton {:on-click  #(handle-state-change "update-current-view" "newgoal")} "+ Add Goal"]])
 

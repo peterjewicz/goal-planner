@@ -17,10 +17,13 @@
   "Handles changing the view to the next selected page"
   (swap! state conj {:activeView {(keyword payload) "visible"}}))
 
+(defn update-goals [goals]
+  (swap! state conj {:goals goals}))
 
-(defn update-state-item [payload]
-  "Updates a specific key in the store with a val - we pass in the whole state instance each time"
-  (swap! state conj {(keyword (:key payload)) (:val payload)}))
+
+; (defn update-state-item [payload]
+;   "Updates a specific key in the store with a val - we pass in the whole state instance each time"
+;   (swap! state conj {(keyword (:key payload)) (:val payload)}))
 
 (defn handle-state-change [action payload]
   "Accept an action function to dispatch and passes it the current payload"
