@@ -3,6 +3,7 @@
             [goal-planner.state.state :refer [handle-state-change]]
             [goal-planner.scripts.dates :refer [get-date-by-days]]
             [goal-planner.scripts.localforageApi :as api]
+            [goal-planner.scripts.datepicker :as datepicker]
             ["moment" :as moment]))
 
 (defn check-string-blank [string]
@@ -14,7 +15,7 @@
 (defn save-goal [goal]
   "Saves our goal to localStorage"
   (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal)))
-     (api/add-goal @goal)
+     (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) ; Add the start time to the map
      (js/alert "Compleition and Title are Required")))
 
 (defn generate-default-milestones [details value]
@@ -45,11 +46,16 @@
   "updates value of a milestone at 'index'"
   (swap! details assoc-in [:milestones index :value] value))
 
+(defn update-cal []
+  (js/alert "test"))
+
 (defn render [state]
-  (let [details (atom {:title "" :criteria "" :current 0
-                       :days 0 :weeks 0 :years 1
+  (let [details (atom {:title "" :criteria ""
+                       :start ""
+                       :end ""
                        :milestones []
-                       :progress []})]
+                       :progress []})
+        endDate (atom (js/Date.))]
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
@@ -60,15 +66,8 @@
         [:h3.borderText "Goal Completion"]
         [:input {:type "Text" :placeholder "End Criteria" :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Timeline"]
-        [:div.timelineItem
-          [:input.timelineInput {:type "text" :on-change #(swap! details conj {:days (-> % .-target .-value)})}]
-          [:p.timelineLabel "Days"]]
-        [:div.timelineItem
-          [:input.timelineInput {:type "text" :on-change #(swap! details conj {:weeks (-> % .-target .-value)})}]
-          [:p.timelineLabel "Weeks"]]
-        [:div.timelineItem
-           [:input.timelineInput {:type "text" :defaultValue 1 :on-change #(swap! details conj {:years (-> % .-target .-value)})}]
-           [:p.timelineLabel "years"]]
+        ; [:input {:type "date"}]
+        [datepicker/datepicker update-cal]
         [:div.milestonesWrapper
           [:h3.borderText "Milestones"]
           (if (<  0 (count (:criteria @details)))

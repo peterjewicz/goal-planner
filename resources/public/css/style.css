@@ -257,4 +257,14 @@ button.secondary:hover {
 .GoalPage.header p:not(:first-of-type) {
   text-align: center;
   font-weight: 600;
+  text-transform: capitalize;
+}
+
+.GoalPage.title {
+  text-transform: capitalize;
+  padding-bottom: 24px;
+}
+
+.GoalPage.progress.progressItem {
+  padding: 12px 0;
 }
