@@ -46,13 +46,10 @@
   "updates value of a milestone at 'index'"
   (swap! details assoc-in [:milestones index :value] value))
 
-(defn update-cal []
-  (js/alert "test"))
-
 (defn render [state]
   (let [details (atom {:title "" :criteria ""
                        :start ""
-                       :end ""
+                       :end {:day "1" :month "January" :year "2019"}
                        :milestones []
                        :progress []})
         endDate (atom (js/Date.))]
@@ -66,8 +63,7 @@
         [:h3.borderText "Goal Completion"]
         [:input {:type "Text" :placeholder "End Criteria" :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Timeline"]
-        ; [:input {:type "date"}]
-        [datepicker/datepicker update-cal]
+        [datepicker/datepicker details]
         [:div.milestonesWrapper
           [:h3.borderText "Milestones"]
           (if (<  0 (count (:criteria @details)))

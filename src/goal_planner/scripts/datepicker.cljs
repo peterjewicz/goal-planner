@@ -1,15 +1,6 @@
 (ns goal-planner.scripts.datepicker
-  (:require [reagent.core :as reagent :refer [atom]]
-            ["moment" :as moment]))
+  (:require ["moment" :as moment]))
 
-
-; we call the datepicker it should default to todays date for now
-; should drop down - need three rows year month day
-; If jan it should have 31 days
-; as you switch months it should change how many day you have
-; (let [bodyElem (.-body js/document)]
-;
-; )
 (defonce months ["January" "February" "March" "April" "May"
                  "June" "July" "August" "September" "October"
                  "November" "December"])
@@ -30,49 +21,51 @@
 
 (defn generate-css [styles]
   "simple helper to add the stles to the domElement"
-  (str "style=\""(clojure.string/join " "  (map (fn [[key val]] (str (name key) ": " val)) styles))"\""))
+  (str "style=\""(clojure.string/join " " (map (fn [[key val]] (str (name key) ": " val)) styles))"\""))
 
 (defn generate-months []
   (map (fn [month]
-          (str "<option value='"month"'>"month"</option>")) months))
+           [:option {:value month :key month} month]) months))
+
 (defn generate-years []
   (map (fn [year]
-          (str "<option value='"year"'>"year"</option>")) (range 2019 2050)))
+           [:option {:value year :key year} year]) (range 2019 2050)))
 
 (defn generate-days []
   (map (fn [day]
-          (str "<option value='"day"'>"day"</option>")) (range 1 32)))
+           [:option {:value day :key day} day]) (range 1 32)))
 
-; (defn generate-html []
-;   "Generates datepicker html"
-;   (str "<div id=\"datepicker\" "(generate-css defaultStyles)">
-;           <div class=\"datepicker__inner\">
-;             <select onChange='"'(dateChange)"'>"
-;               (generate-months)
-;           "</select>
-;             <select>"
-;               (generate-days)
-;             "</select>
-;             <select>"
-;               (generate-years)
-;             "</select>
-;           </div>
-;         </div>"))
-; .style.color
-(defn generate-html []
-  [:div#datepicker {:style defaultStyles}
-    [:p "test"]])
 
 (defn open-datepicker []
   (let [bodyElem (.getElementById js/document "datepicker")]
-    ; (print (aget  (.-style bodyElem) "z-index"))
-    (aset  (.-style bodyElem) "z-index" "900")
-))
-(defn datepicker [dateChange]
+    (aset  (.-style bodyElem) "z-index" "900")))
+
+(defn close-datepicker []
+  (let [bodyElem (.getElementById js/document "datepicker")]
+    (aset  (.-style bodyElem) "z-index" "-999")))
+
+(defn update-passed-store [type val store]
+  "Updates the values of the passed in atom expected {:day :month :year} map"
+  (swap! store assoc-in [:end (keyword type)] val)
+)
+
+(defn generate-html [store]
+  [:div#datepicker {:style defaultStyles}
+    [:p  {:on-click #(close-datepicker)} "x"]
+    [:div#datepicker.datepickerinnner
+    [:select {:default-value (:end (:month @store)) :on-change #(update-passed-store "month" (-> % .-target .-value) store)}
+      (generate-months)]
+    [:select {:on-change #(update-passed-store "day" (-> % .-target .-value) store)}
+      (generate-days)]
+    [:select {:on-change #(update-passed-store "year" (-> % .-target .-value) store)}
+      (generate-years)]]])
+
+(defn datepicker [store]
   "responsible for rending the datepicker to the screen"
-  [:div
-    [:input {:type "text" :on-click #(open-datepicker)}]
-    (generate-html)]
-  )
-; :on-click #(open-datepicker dateChange)
-; :on-change #(js/alert (-> % .-target .-value))
+  (let [vals (:end @store)]
+    (fn []
+      [:div
+        [:input {:type "text"
+                 :value (str (:month (:end @store)) " " (:day (:end @store)) ", " (:year (:end @store)))
+                 :on-click #(open-datepicker)}]
+        (generate-html store)])))

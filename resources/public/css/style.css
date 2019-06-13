@@ -260,11 +260,46 @@ button.secondary:hover {
   text-transform: capitalize;
 }
 
+.GoalPage.titleWrapper {
+  display: flex;
+}
+
 .GoalPage.title {
   text-transform: capitalize;
+  margin-right: 16px;
+}
+
+.GoalPage.titleWrapper .Badge {
+  position: relative;
+  top: 18px;
+}
+
+.GoalPage.DueDate {
   padding-bottom: 24px;
 }
 
 .GoalPage.progress.progressItem {
   padding: 12px 0;
+}
+
+
+/* BADGE STYLES */
+
+.Badge {
+  display: inline-block;
+  color: white;
+  text-transform: : uppercase;
+}
+
+.Badge p {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.Badge .success {
+  background: #56d379;
+}
+
+.Badge .failure {
+  background: #d35656;
 }
