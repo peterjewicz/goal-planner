@@ -12,10 +12,19 @@
     false
     true))
 
+(defn handle-save [goal]
+  (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) ; Add the start time to the map
+  (reset! goal {:title "" :criteria ""
+                       :start ""
+                       :end {:day "1" :month "January" :year "2019"}
+                       :milestones []
+                       :progress []}))
+
 (defn save-goal [goal]
+  (print @goal)
   "Saves our goal to localStorage"
   (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal)))
-     (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) ; Add the start time to the map
+     (handle-save goal)
      (js/alert "Compleition and Title are Required")))
 
 (defn generate-default-milestones [details value]
@@ -52,16 +61,16 @@
                        :end {:day "1" :month "January" :year "2019"}
                        :milestones []
                        :progress []})
-        endDate (atom (js/Date.))]
+        endDate (atom (js/Date.))] ; TODO Think we can safely remove
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
           [:p {:on-click #(handle-state-change "update-current-view" "home")} "<- Back"]
           [:p "Add New Goal"]]
         [:h2 "I Want To..."]
-        [:input {:type "Text" :placeholder "Goal Name" :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
+        [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
         [:h3.borderText "Goal Completion"]
-        [:input {:type "Text" :placeholder "End Criteria" :on-change #(generate-default-milestones details (-> % .-target .-value))}]
+        [:input {:type "Text" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Timeline"]
         [datepicker/datepicker details]
         [:div.milestonesWrapper

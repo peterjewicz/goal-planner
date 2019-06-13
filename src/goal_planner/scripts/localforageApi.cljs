@@ -27,6 +27,7 @@
         (if (= (:title (nth currentStorage i)) (:title goal))
           (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj (assoc currentStorage i goal))) (fn []
             (get-initial-data)
+            (handle-state-change "update-active-goal" goal)
             (js/alert "Progress Updated!"))))
           (recur (inc i))))))))
 
