@@ -3,6 +3,7 @@
             [goal-planner.state.state :refer [handle-state-change]]
             [goal-planner.scripts.localforageApi :as api]
             [goal-planner.components.badge :as badge]
+            [goog.string :as gstring]
             [cljs-time.core :refer [now date-time]]
             [cljs-time.format :refer [formatter parse unparse]]))
 
@@ -18,7 +19,8 @@
       (let [goal (:activeGoal @state)]
         [:div.GoalPage.ViewPage.View {:class (:goalpage (:activeView @state))}
           [:div.GoalPage.header
-            [:p {:on-click #(handle-state-change "update-current-view" "home")} "<- Back"]
+            [:div.header__imageWrapper
+              [:img.backButton {:src "back.png" :on-click #(handle-state-change "update-current-view" "home")}]]
             [:p (:title goal)]]
           [:div.GoalPage.titleWrapper
             [:h2.GoalPage.title (:title goal)]
@@ -28,7 +30,7 @@
             [:h3.borderText "Current Progess"]
             (doall (for [progress (:progress goal)]
               [:div.GoalPage.progress.progressItem {:key (str (:value progress) "-" (:date progress) )}
-                [:p (str (:value progress) " - "  (:date progress) " - " (:note progress))]
+                [:p (str "Amount: "(:value progress) (gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;") "On: "  (:date progress) " - " (:note progress))]
               ]))]
           [:div.GoalPage.progress
             [:div.GoalPage.progress.addProgress

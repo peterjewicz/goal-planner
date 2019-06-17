@@ -48,9 +48,14 @@ h4 {font-size: 1.25rem;}
   background: #e9f1fc;
   min-width: 100%;
   min-height: 100%;
+  width: 100%;
 }
 .ViewPage.visible {
   left: 0;
+}
+
+.backButton {
+  width: 12px;
 }
 
 .borderText {
@@ -141,7 +146,7 @@ button.secondary:hover {
 .New.header {
   display: flex;
 }
-.New.header p {
+.New.header p, .New.header .header__imageWrapper {
   width: 33%;
 }
 .New.header p:not(:first-of-type) {
@@ -234,6 +239,7 @@ button.secondary:hover {
   border-radius: 6px;
   height: 30px;
   position: relative;
+  overflow: hidden;
 }
 
 .Goal.bar.filled {
@@ -250,11 +256,18 @@ button.secondary:hover {
   display: flex;
 }
 
-.GoalPage.header p {
+.GoalPage.header .header__imageWrapper{
   width: 33%;
 }
 
-.GoalPage.header p:not(:first-of-type) {
+/* .GoalPage.header p:not(:first-of-type) {
+  text-align: center;
+  font-weight: 600;
+  text-transform: capitalize;
+} */
+
+.GoalPage.header p {
+  width: 33%;
   text-align: center;
   font-weight: 600;
   text-transform: capitalize;

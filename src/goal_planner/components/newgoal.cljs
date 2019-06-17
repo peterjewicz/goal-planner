@@ -65,7 +65,8 @@
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
-          [:p {:on-click #(handle-state-change "update-current-view" "home")} "<- Back"]
+          [:div.header__imageWrapper
+            [:img.backButton {:src "back.png" :on-click #(handle-state-change "update-current-view" "home")}]]
           [:p "Add New Goal"]]
         [:h2 "I Want To..."]
         [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
