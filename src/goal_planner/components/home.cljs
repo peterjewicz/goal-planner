@@ -12,6 +12,7 @@
 (defn render [state]
   [:div.Home.View
     [:div.Home.header
+      [:p {:on-click #(handle-state-change "update-current-view" "history")} "H"]
       [:p "Your Goals"]]
     (doall (for [goal (:goals @state)]
       [:div {:key (:title goal) :on-click #(open-goal-page goal)}

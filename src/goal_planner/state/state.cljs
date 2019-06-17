@@ -7,7 +7,8 @@
 (defonce state (atom {:activeView {  ; This gets erased as state changes but I left it here as a reminder for expected values
                                    :home "visible"
                                    :newgoal false
-                                   :goalpage false}
+                                   :goalpage false
+                                   :history false}
                        :goals []
                        :milestones []
                        :progress []

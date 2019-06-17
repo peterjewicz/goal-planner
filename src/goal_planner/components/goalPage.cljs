@@ -3,12 +3,24 @@
             [goal-planner.state.state :refer [handle-state-change]]
             [goal-planner.scripts.localforageApi :as api]
             [goal-planner.components.badge :as badge]
+            [goal-planner.scripts.progress :as progress]
             [goog.string :as gstring]
             [cljs-time.core :refer [now date-time]]
             [cljs-time.format :refer [formatter parse unparse]]))
 
 (defn add-progress [goal progress]
-  (api/update-goal (update-in goal [:progress] conj {:value (:value @progress) :date (unparse (formatter "MM/dd/yyyy") (now)) :note (:note @progress)}))
+
+  ; If the goal is complete we add a a `completedOn` date to the object to for history page checks
+  (if ( >= (+ (int (:value @progress)) (int (progress/get-total-progress goal))) (:criteria goal))
+    (print "yes")
+    (print "no")
+  )
+  ; Need to check whether progress is > than critera and add completed date
+  (api/update-goal
+  (conj ; adds our completed on flag
+    (update-in goal [:progress] conj {:value (:value @progress) :date (unparse (formatter "MM/dd/yyyy") (now)) :note (:note @progress)})
+    {:completedOn false}
+  ))
   (reset! progress {:value 0 :note ""})) ;TODO update input too and cleanup
 
 
@@ -26,6 +38,7 @@
             [:h2.GoalPage.title (:title goal)]
             [badge/render goal]]
           [:p.GoalPage.DueDate (str "Complete By: " (:month (:end goal)) " " (:day (:end goal)) ", " (:year (:end goal)))]
+          [:p.GoalPage.total (str "Goal: " (:criteria goal))]
           [:div.GoalPage.progress.currentProgess
             [:h3.borderText "Current Progess"]
             (doall (for [progress (:progress goal)]

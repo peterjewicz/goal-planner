@@ -118,6 +118,12 @@ button.secondary:hover {
 .Home.header {
   text-align: center;
   font-weight: 600;
+  display: flex;
+}
+
+.Home.header p {
+  width: 33%;
+  text-align: center;
 }
 
 .Home .addGoalButton{
@@ -288,6 +294,10 @@ button.secondary:hover {
 }
 
 .GoalPage.DueDate {
+  padding-bottom: 8px;
+}
+
+.GoalPage.total {
   padding-bottom: 24px;
 }
 
@@ -315,4 +325,19 @@ button.secondary:hover {
 
 .Badge .failure {
   background: #d35656;
+}
+
+
+/* HISTORY PAGE */
+.History.header {
+  display: flex;
+}
+
+.History.header p {
+  text-align: center;
+  font-weight: 600;
+}
+
+.History.header p, .History.header .header__imageWrapper {
+  width: 33%;
 }

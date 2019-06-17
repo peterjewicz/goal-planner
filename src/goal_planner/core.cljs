@@ -4,6 +4,7 @@
               [goal-planner.state.state :refer [state handle-state-change]]
               [goal-planner.components.newgoal :as newgoal]
               [goal-planner.components.goalPage :as goalPage]
+              [goal-planner.components.history :as history]
               [goal-planner.scripts.localforageApi :as api]))
 
 
@@ -18,7 +19,8 @@
   [:div.Main
    [home/render state]
    [newgoal/render state]
-   [goalPage/render state]])
+   [goalPage/render state]
+   [history/render state]])
 
 
 (reagent/render-component [Main]
