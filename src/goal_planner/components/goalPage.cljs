@@ -19,8 +19,8 @@
       (let [goal (:activeGoal @state)]
         [:div.GoalPage.ViewPage.View {:class (:goalpage (:activeView @state))}
           [:div.GoalPage.header
-            [:div.header__imageWrapper
-              [:img.backButton {:src "back.png" :on-click #(handle-state-change "update-current-view" "home")}]]
+            [:div.header__imageWrapper {:on-click #(handle-state-change "update-current-view" "home")}
+              [:img.backButton {:src "back.png"}]]
             [:p (:title goal)]]
           [:div.GoalPage.titleWrapper
             [:h2.GoalPage.title (:title goal)]

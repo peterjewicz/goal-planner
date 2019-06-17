@@ -9,9 +9,8 @@
   :position "fixed"
   :width "100%"
   :height "100%"
-  :padding 16
   :text-align "center"
-  :background "white"
+  :background-color "rgba(255,255,255,.95)"
   :display "flex"
   :flex-direction "column"
   :justify-content "center"
@@ -51,14 +50,18 @@
 
 (defn generate-html [store]
   [:div#datepicker {:style defaultStyles}
-    [:p  {:on-click #(close-datepicker)} "x"]
     [:div#datepicker.datepickerinnner
-    [:select {:default-value (:end (:month @store)) :on-change #(update-passed-store "month" (-> % .-target .-value) store)}
-      (generate-months)]
-    [:select {:on-change #(update-passed-store "day" (-> % .-target .-value) store)}
-      (generate-days)]
-    [:select {:on-change #(update-passed-store "year" (-> % .-target .-value) store)}
-      (generate-years)]]])
+      [:select {:default-value (:end (:month @store)) :on-change #(update-passed-store "month" (-> % .-target .-value) store)
+                :style {:webkit-appearance "none" :padding "8px" :text-align "center" :margin "0 8px"}}
+        (generate-months)]
+      [:select {:on-change #(update-passed-store "day" (-> % .-target .-value) store)
+               :style {:webkit-appearance "none" :padding "8px" :text-align "center" :margin "0 8px"}}
+        (generate-days)]
+      [:select {:on-change #(update-passed-store "year" (-> % .-target .-value) store)
+                :style {:webkit-appearance "none" :padding "8px" :text-align "center" :margin "0 8px"}}
+        (generate-years)]
+      [:div.buttonWrapper {:style {:width "100%" :margin-top "32px"}}
+        [:button.primary  {:on-click #(close-datepicker)} "Update"]]]])
 
 (defn datepicker [store]
   "responsible for rending the datepicker to the screen"

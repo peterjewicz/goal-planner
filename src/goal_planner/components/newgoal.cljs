@@ -65,14 +65,14 @@
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
-          [:div.header__imageWrapper
-            [:img.backButton {:src "back.png" :on-click #(handle-state-change "update-current-view" "home")}]]
+          [:div.header__imageWrapper {:on-click #(handle-state-change "update-current-view" "home")}
+            [:img.backButton {:src "back.png"}]]
           [:p "Add New Goal"]]
         [:h2 "I Want To..."]
         [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
         [:h3.borderText "Goal Completion"]
         [:input {:type "Text" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
-        [:h3.borderText "Timeline"]
+        [:h3.borderText "Due Date"]
         [datepicker/datepicker details]
         [:div.milestonesWrapper
           [:h3.borderText "Milestones"]
