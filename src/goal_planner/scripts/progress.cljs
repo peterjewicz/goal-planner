@@ -19,7 +19,35 @@
     true
     false))
 
+; TODO we can combine the next two into a generic date checker
 (defn calculate-overdue [endDateMap]
   "Checks whether a given date has past"
   (let [momentComplete (moment (str (.format (.month (moment) (:month endDateMap)) "M") "/" (:day endDateMap) "/" (:year endDateMap)))]
     (.isAfter momentComplete (moment))))
+
+(defn check-if-date-is-later [first second]
+  (print first)
+  (print second)
+  (.isAfter first second))
+
+(defn get-total-completed [goals]
+  "returns how many of goals are compelted"
+  (reduce (fn [total goal]
+    (if (:completedOn goal)
+      (inc total)
+      total)) 0  goals))
+
+(defn get-total-overdue [goals]
+  "returns the total amount of goals past their due date"
+  (reduce (fn [total goal]
+    (if (calculate-overdue (:end goal))
+      (inc total)
+      total)) 0  goals))
+
+(defn get-total-completed-on-time [goals]
+  "Checks completed goals vs their due date and determins if they were completed on time or not"
+  (reduce (fn [total goal]
+    (if (and (:completedOn goal) (check-if-date-is-later (moment (str (.format (.month (moment) (:month (:end goal))) "M") "/" (:day (:end goal)) "/" (:year (:end goal)))) (moment (:completedOn goal))))
+      (inc total)
+      total)) 0  goals)
+)

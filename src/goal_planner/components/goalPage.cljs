@@ -8,19 +8,17 @@
             [cljs-time.core :refer [now date-time]]
             [cljs-time.format :refer [formatter parse unparse]]))
 
-(defn add-progress [goal progress]
-
-  ; If the goal is complete we add a a `completedOn` date to the object to for history page checks
+(defn check-if-completed [goal progress]
+  "Checks if the current progress would be added makes the goal complete and passes back either false or today's date"
   (if ( >= (+ (int (:value @progress)) (int (progress/get-total-progress goal))) (:criteria goal))
-    (print "yes")
-    (print "no")
-  )
-  ; Need to check whether progress is > than critera and add completed date
+    (unparse (formatter "MM/dd/yyyy") (now))
+    false))
+
+(defn add-progress [goal progress]
   (api/update-goal
   (conj ; adds our completed on flag
     (update-in goal [:progress] conj {:value (:value @progress) :date (unparse (formatter "MM/dd/yyyy") (now)) :note (:note @progress)})
-    {:completedOn false}
-  ))
+    {:completedOn (check-if-completed goal progress)}))
   (reset! progress {:value 0 :note ""})) ;TODO update input too and cleanup
 
 
