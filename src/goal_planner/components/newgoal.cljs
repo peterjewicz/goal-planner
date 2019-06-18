@@ -13,17 +13,20 @@
     true))
 
 (defn handle-save [goal]
-  (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) ; Add the start time to the map
-  (reset! goal {:title "" :criteria ""
-                       :start ""
-                       :end {:day "1" :month "January" :year "2019"}
-                       :milestones []
-                       :progress []}))
+  "Checks the promise from api and either saves the result or alerts title already taken"
+  (.then (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) (fn [result]
+    (if result
+      (reset! goal {:title "" :criteria ""
+                           :start ""
+                           :end {:day "1" :month "January" :year "2019"}
+                           :milestones []
+                           :progress []})
+      (js/alert "Title Is Already Taken!")))))
 
 (defn save-goal [goal]
   (print @goal)
   "Saves our goal to localStorage"
-  (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal)))
+  (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal))) ; TODO move these to a pre in the API
      (handle-save goal)
      (js/alert "Compleition and Title are Required")))
 

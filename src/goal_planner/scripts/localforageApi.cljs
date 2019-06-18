@@ -15,9 +15,16 @@
   ; TODO logical checks wither here or in the actual component
     (.then (.getItem (.-localforage js/window) "goals") (fn [value]
       (let [currentStorage (js->clj value :keywordize-keys true)]
-        (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj currentStorage goal)) (fn []
-          (get-initial-data)
-          (js/alert "Goal Added"))))))))
+        (loop [i 0] ; Little cleaner than doall/for so we only iterate as needed this probably won't get too big anyways
+          ; firt we check if I is at the current length or we can get an out of bounds errosr
+          (if (= (count currentStorage) i)
+            (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj currentStorage goal)) (fn []
+              (get-initial-data)
+              (js/alert "Goal Added")
+              true)))
+              (if (= (:title (nth currentStorage i)) (:title goal))
+                false
+                (recur (inc i)))))))))
 
 (defn update-goal [goal]
   "updates a goal by finding it then overriding it"
