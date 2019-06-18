@@ -48,4 +48,4 @@
               [:h3.borderText "Add Progress"]
               [:input {:type "text" :placeholder "Progress" :value (:value @progress) :on-change #(swap! progress conj {:value (-> % .-target .-value)})}]
               [:input {:type "text" :placeholder "Note" :value (:note @progress) :on-change #(swap! progress conj {:note (-> % .-target .-value)})}]
-              [:button.primary {:on-click #(add-progress goal progress)} "Save Progres"]]]]))))
+              [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]]))))

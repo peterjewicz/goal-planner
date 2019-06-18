@@ -60,8 +60,7 @@
                        :start ""
                        :end {:day "1" :month "January" :year "2019"}
                        :milestones []
-                       :progress []})
-        endDate (atom (js/Date.))] ; TODO Think we can safely remove
+                       :progress []})] ; TODO Think we can safely remove
     (fn []
       [:div.New.ViewPage.View {:class (:newgoal (:activeView @state))}
         [:div.New.header
@@ -74,18 +73,19 @@
         [:input {:type "Text" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Due Date"]
         [datepicker/datepicker details]
-        [:div.milestonesWrapper
-          [:h3.borderText "Milestones"]
-          (if (<  0 (count (:criteria @details)))
-            (let [milestones (:milestones @details)]
-              (doall (map-indexed (fn [index milestone]
-                [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
-                  [:input.milestoneDate {:type "text" :on-change #(update-milestone-date index details (-> % .-target .-value)) :defaultValue (:date milestone)}]
-                  [:input.milestoneValue {:type "text" :on-change #(update-milestone-value index details (-> % .-target .-value)) :defaultValue (:value milestone)}]
-                  [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
-              ) milestones))))
-          (if (<  0 (count (:criteria @details))) ; TODO make this wrapped in the one above
-            [:button.addMilestone.secondary {:on-click #(add-milestone details)} "+"])]
+        ; DISABLE MILESTONES FOR NOW we can bring them back later if they make sense
+        ; [:div.milestonesWrapper
+        ;   [:h3.borderText "Milestones"]
+        ;   (if (<  0 (count (:criteria @details)))
+        ;     (let [milestones (:milestones @details)]
+        ;       (doall (map-indexed (fn [index milestone]
+        ;         [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
+        ;           [:input.milestoneDate {:type "text" :on-change #(update-milestone-date index details (-> % .-target .-value)) :defaultValue (:date milestone)}]
+        ;           [:input.milestoneValue {:type "text" :on-change #(update-milestone-value index details (-> % .-target .-value)) :defaultValue (:value milestone)}]
+        ;           [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
+        ;       ) milestones))))
+        ;   (if (<  0 (count (:criteria @details))) ; TODO make this wrapped in the one above
+        ;     [:button.addMilestone.secondary {:on-click #(add-milestone details)} "+"])]
         [:button.primary.saveGoal {:on-click #(save-goal details)} "Save Goal"]])))
 
 

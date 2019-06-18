@@ -1,7 +1,13 @@
 (ns goal-planner.components.history
   (:require [reagent.core :as reagent :refer [atom]]
             [goal-planner.state.state :refer [handle-state-change]]
-            [goal-planner.scripts.progress :as progress]))
+            [goal-planner.scripts.progress :as progress]
+            [goog.string :as gstring]
+            [goog.string.format]))
+
+(defn format-number [number]
+  "To 2 decimal places"
+  (gstring/format "%.2f" number))
 
 (defn render [state]
   [:div.History.ViewPage.View {:class (:history (:activeView @state))}
@@ -11,10 +17,8 @@
       [:p "History"]]
     [:div.History.body
       [:h4 (str "Goal Total: " (count (:goals @state)))]
-      [:h4 (str "% Completed: " (* 100 (/ (progress/get-total-completed (:goals @state)) (count (:goals @state))))) "%"]
-      [:h4 (str "% Overdue: " (* 100 (/ (progress/get-total-overdue (:goals @state)) (count (:goals @state))))) "%"]
-      [:h4 (str "How Often Do You Complete On Time? " (* 100 (/ (progress/get-total-completed-on-time (:goals @state)) (count (:goals @state)))) "%")]
-    ]
-  ])
+      [:h4 (str "Completed: " (format-number (* 100 (/ (progress/get-total-completed (:goals @state)) (count (:goals @state))))) "%")]
+      [:h4 (str "Overdue: " (format-number (* 100 (/ (progress/get-total-overdue (:goals @state)) (count (:goals @state))))) "%")]
+      [:h4 (str "Completed On Time: " (format-number (* 100 (/ (progress/get-total-completed-on-time (:goals @state)) (count (:goals @state))))) "%")]]])
 
 
