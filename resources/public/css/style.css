@@ -113,6 +113,28 @@ button.secondary:hover {
 }
 
 
+button.danger {
+  background: red;
+  width: 80px;
+  height: 30px;
+  border-radius: 16px;
+  font-size: .75rem;
+  text-align: center;
+  color: white;
+  line-height: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .25s;
+  border: none;
+}
+
+button.danger:hover {
+  background: #287ad6;
+}
+
+
+
+
 
 /* HOME PAGE STYLES */
 .Home.header {
@@ -303,6 +325,10 @@ button.secondary:hover {
 
 .GoalPage.progress.progressItem {
   padding: 12px 0;
+}
+
+.GoalPage .delete {
+  margin-top: 128px;
 }
 
 

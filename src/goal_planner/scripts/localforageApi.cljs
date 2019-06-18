@@ -38,3 +38,20 @@
             (js/alert "Progress Updated!"))))
           (recur (inc i))))))))
 
+(defn filter-goals-by-title [title currentStorage]
+  "filters out goal that matches the given tile"
+  (filter (fn [goal]
+            (if (= (:title goal) title)
+              false
+              true)) currentStorage))
+
+(defn delete-goal [goal]
+  (.then (.getItem (.-localforage js/window) "goals") (fn [value]
+    (let [currentStorage (js->clj value :keywordize-keys true)]
+      (.then (.setItem (.-localforage js/window) "goals" (clj->js (filter-goals-by-title (:title goal) currentStorage)) (fn []
+        (get-initial-data)
+        (handle-state-change "update-active-goal" {})
+        (handle-state-change "update-current-view" "home")
+        (js/alert "Goal Deleted!"))))))))
+
+

@@ -21,6 +21,10 @@
     {:completedOn (check-if-completed goal progress)}))
   (reset! progress {:value 0 :note ""})) ;TODO update input too and cleanup
 
+(defn delete-goal [goal]
+  "calls the API to delete a goal"
+  (api/delete-goal goal))
+
 
 (defn render [state]
   (let [
@@ -48,4 +52,6 @@
               [:h3.borderText "Add Progress"]
               [:input {:type "text" :placeholder "Progress" :value (:value @progress) :on-change #(swap! progress conj {:value (-> % .-target .-value)})}]
               [:input {:type "text" :placeholder "Note" :value (:note @progress) :on-change #(swap! progress conj {:note (-> % .-target .-value)})}]
-              [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]]))))
+              [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]
+          [:p.delete "This action is permanent!"]
+          [:button.danger {:on-click #(delete-goal goal)} "Delete"]]))))
