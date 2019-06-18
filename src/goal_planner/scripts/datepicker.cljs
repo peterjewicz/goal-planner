@@ -33,7 +33,7 @@
 
 (defn generate-years []
   (map (fn [year]
-           [:option {:value year :key year} year]) (range 2019 2050)))
+           [:option {:value year :key year} year]) (range (.year (moment)) (+ 50 (.year (moment))))))
 
 (defn generate-days [date]
   (map (fn [day]
