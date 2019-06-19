@@ -82,6 +82,25 @@ input.timelineInput {
   padding-bottom: 24px;
 }
 
+#fancy-alert button {
+  background: #56d379;
+  width: 120px;
+  height: 50px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  line-height: 50px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .25s;
+  border: none;
+  margin-top: 16px;
+}
+
+#fancy-alert button:hover {
+  background: #43a55e;
+}
+
 button.primary{
   background: #56d379;
   width: 120px;
@@ -114,7 +133,7 @@ button.secondary:hover {
 
 
 button.danger {
-  background: red;
+  background: #d15c5c;
   width: 80px;
   height: 30px;
   border-radius: 16px;
@@ -129,7 +148,7 @@ button.danger {
 }
 
 button.danger:hover {
-  background: #287ad6;
+  background: #af4d4d;
 }
 
 
@@ -177,7 +196,7 @@ button.danger:hover {
 .New.header p, .New.header .header__imageWrapper {
   width: 33%;
 }
-.New.header p:not(:first-of-type) {
+.New.header p {
   text-align: center;
   font-weight: 600;
 }
@@ -329,6 +348,10 @@ button.danger:hover {
 
 .GoalPage .delete {
   margin-top: 128px;
+}
+
+.GoalPage button.danger {
+  margin-top: 8px;
 }
 
 

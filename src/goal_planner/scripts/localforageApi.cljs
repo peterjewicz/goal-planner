@@ -1,5 +1,6 @@
 (ns goal-planner.scripts.localforageApi
-    (:require [goal-planner.state.state :refer [handle-state-change]]))
+    (:require [goal-planner.state.state :refer [handle-state-change]]
+              [fancy_alert.core :as fancy-alert]))
 
 (defn add-metadata [details]
   "Adds the extra metadata we want to track on each item"
@@ -20,7 +21,10 @@
           (if (= (count currentStorage) i)
             (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj currentStorage goal)) (fn []
               (get-initial-data)
-              (js/alert "Goal Added")
+              (fancy-alert/fancy-alert
+                {:text "Goal Added" :hideAfterN false
+                 :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+                 :buttonProperties {:buttonText "Okay"}})
               true)))
               (if (= (:title (nth currentStorage i)) (:title goal))
                 false
@@ -35,9 +39,14 @@
           (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj (assoc currentStorage i goal))) (fn []
             (get-initial-data)
             (handle-state-change "update-active-goal" goal)
-            (js/alert "Progress Updated!"))))
+            (fancy-alert/fancy-alert
+              {:text "Progress Updated" :hideAfterN false
+               :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+               :buttonProperties {:buttonText "Okay"}}))))
           (recur (inc i))))))))
 
+
+; NEXT TWO FUNCTIONS HANDLE DELETIONS
 (defn filter-goals-by-title [title currentStorage]
   "filters out goal that matches the given tile"
   (filter (fn [goal]
@@ -52,6 +61,17 @@
         (get-initial-data)
         (handle-state-change "update-active-goal" {})
         (handle-state-change "update-current-view" "home")
-        (js/alert "Goal Deleted!"))))))))
+        (fancy-alert/fancy-alert
+          {:text "Goal Deleted" :hideAfterN false
+           :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+           :buttonProperties {:buttonText "Okay"}}))))))))
+
+;UNRELATED TODO remove
+
+; (def xf (comp (->
+;           (take 5)
+;           (filter))))
+;
+; (transduce xf (range 1 100))
 
 

@@ -12,6 +12,7 @@
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
                  [reagent "0.7.0"]
+                 [fancy_alert "0.0.2"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]]
 
   :plugins [[lein-figwheel "0.5.16"]

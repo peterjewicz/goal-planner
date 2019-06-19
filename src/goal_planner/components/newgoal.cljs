@@ -4,6 +4,7 @@
             [goal-planner.scripts.dates :refer [get-date-by-days]]
             [goal-planner.scripts.localforageApi :as api]
             [goal-planner.scripts.datepicker :as datepicker]
+            [fancy_alert.core :as fancy-alert]
             ["moment" :as moment]))
 
 (defn check-string-blank [string]
@@ -14,21 +15,26 @@
 
 (defn handle-save [goal]
   "Checks the promise from api and either saves the result or alerts title already taken"
-  (.then (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) (fn [result]
+  (.then (api/add-goal (conj @goal {:start (.getTime (js/Date.))})) (fn [result] ; locallForage returns a promise
     (if result
       (reset! goal {:title "" :criteria ""
                            :start ""
                            :end {:day "1" :month "January" :year "2019"}
                            :milestones []
                            :progress []})
-      (js/alert "Title Is Already Taken!")))))
+      (fancy-alert/fancy-alert
+        {:text "Title Is Already Taken!" :hideAfterN false
+         :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+         :buttonProperties {:buttonText "Okay"}})))))
 
 (defn save-goal [goal]
-  (print @goal)
   "Saves our goal to localStorage"
-  (if (and (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal))) ; TODO move these to a pre in the API
+  (if (and (integer? (js/parseInt (:criteria @goal))) (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal))) ; TODO move these to a pre in the API
      (handle-save goal)
-     (js/alert "Compleition and Title are Required")))
+      (fancy-alert/fancy-alert
+        {:text "Compleition (Must be a number) and Title are Required" :hideAfterN false
+         :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+         :buttonProperties {:buttonText "Okay"}})))
 
 (defn generate-default-milestones [details value]
   "generates 4 default milestones based on goal"
