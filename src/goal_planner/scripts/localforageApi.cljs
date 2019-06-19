@@ -65,13 +65,3 @@
           {:text "Goal Deleted" :hideAfterN false
            :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
            :buttonProperties {:buttonText "Okay"}}))))))))
-
-;UNRELATED TODO remove
-
-; (def xf (comp (->
-;           (take 5)
-;           (filter))))
-;
-; (transduce xf (range 1 100))
-
-
