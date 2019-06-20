@@ -16,9 +16,12 @@
         [:img.backButton {:src "back.png"}]]
       [:p "History"]]
     [:div.History.body
-      [:h4 (str "Goal Total: " (count (:goals @state)))]
-      [:h4 (str "Completed: " (format-number (* 100 (/ (progress/get-total-completed (:goals @state)) (count (:goals @state))))) "%")]
-      [:h4 (str "Overdue: " (format-number (* 100 (/ (progress/get-total-overdue (:goals @state)) (count (:goals @state))))) "%")]
-      [:h4 (str "Completed On Time: " (format-number (* 100 (/ (progress/get-total-completed-on-time (:goals @state)) (count (:goals @state))))) "%")]]])
+      (if (> (count (:goals @state)) 0) ; if not goals display a fun message
+        [:div
+          [:h4 (str "Goal Total: " (count (:goals @state)))]
+          [:h4 (str "Completed: " (format-number (* 100 (/ (progress/get-total-completed (:goals @state)) (count (:goals @state))))) "%")]
+          [:h4 (str "Overdue: " (format-number (* 100 (/ (progress/get-total-overdue (:goals @state)) (count (:goals @state))))) "%")]
+          [:h4 (str "Completed On Time: " (format-number (* 100 (/ (progress/get-total-completed-on-time (:goals @state)) (count (:goals @state))))) "%")]]
+        [:div [:h3 {:style {:text-align "center" :font-weight 600}} "No Goals Added"]])]]) ;else
 
 

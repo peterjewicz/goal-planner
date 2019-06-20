@@ -79,7 +79,7 @@
         [:h2 "I Want To..."]
         [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
         [:h3.borderText "Goal Completion"]
-        [:input {:type "Text" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
+        [:input {:type "number" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
         [:h3.borderText "Due Date"]
         [datepicker/datepicker details]
         ; DISABLE MILESTONES FOR NOW we can bring them back later if they make sense

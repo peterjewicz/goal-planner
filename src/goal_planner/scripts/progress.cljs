@@ -1,7 +1,7 @@
 (ns goal-planner.scripts.progress
     (:require ["moment" :as moment]))
 
-; TODO need to cleanup both of these reduces
+; TODO need to cleanup both of these reduces probably don't need them both
 (defn get-progress [progress]
   (reduce-kv
     (fn [result index progress]
