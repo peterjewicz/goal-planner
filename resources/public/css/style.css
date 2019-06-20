@@ -188,6 +188,15 @@ button.danger:hover {
   background: #43a55e;
 }
 
+.Home.header p, .Home.header .header__imageWrapper {
+  width: 33%;
+  text-align: left;
+}
+
+.Home.header p{
+  text-align: center;
+}
+
 
 /* NEW GOAL PAGE */
 .New.header {
