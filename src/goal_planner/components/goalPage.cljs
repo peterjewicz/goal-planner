@@ -54,4 +54,5 @@
               [:input {:type "text" :placeholder "Note" :value (:note @progress) :on-change #(swap! progress conj {:note (-> % .-target .-value)})}]
               [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]
           [:p.delete "This action is permanent!"]
-          [:button.danger {:on-click #(delete-goal goal)} "Delete"]]))))
+          [:button.danger {:on-click #(delete-goal goal)} "Delete"]
+          [:div.adSpacer]]))))

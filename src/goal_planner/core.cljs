@@ -14,7 +14,7 @@
 (api/get-initial-data) ; grabs the initial data from storage
 
 ;; define your app data so that it doesn't get over-written on reload
-
+; TODO we need to do a check to figure out if we are in scroll mode herer
 (defn Main []
   [:div.Main
    [home/render state]

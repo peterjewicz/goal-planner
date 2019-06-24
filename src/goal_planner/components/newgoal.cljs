@@ -32,7 +32,7 @@
   (if (and (integer? (js/parseInt (:criteria @goal))) (check-string-blank (:title @goal)) (check-string-blank (:criteria @goal))) ; TODO move these to a pre in the API
      (handle-save goal)
       (fancy-alert/fancy-alert
-        {:text "Compleition (Must be a number) and Title are Required" :hideAfterN false
+        {:text "Completion (Must be a number) and Title are Required" :hideAfterN false
          :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
          :buttonProperties {:buttonText "Okay"}})))
 

@@ -82,6 +82,10 @@ input.timelineInput {
   padding-bottom: 24px;
 }
 
+.adSpacer {
+  height: 100px;
+}
+
 #fancy-alert button {
   background: #56d379;
   width: 120px;
@@ -179,7 +183,7 @@ button.danger:hover {
   cursor: pointer;
   transition: all .25s;
   position: fixed;
-  bottom: 24px;
+  bottom: 75px;
   right: 24px;
 }
 
@@ -356,7 +360,7 @@ button.danger:hover {
 }
 
 .GoalPage .delete {
-  margin-top: 128px;
+  margin-top: 96px;
 }
 
 .GoalPage button.danger {

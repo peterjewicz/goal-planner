@@ -21,5 +21,6 @@
       [:div {:key (:title goal) :on-click #(open-goal-page goal)}
         [goal/render (:title goal) {:current (progressScripts/get-progress (:progress goal)) :criteria (:criteria goal)}] ; TODO we need a way to track progress!
     ]))
-    [:p.addGoalButton {:on-click  #(handle-state-change "update-current-view" "newgoal")} "+ Add Goal"]])
+    [:p.addGoalButton {:on-click  #(handle-state-change "update-current-view" "newgoal")} "+ Add Goal"]
+    [:div.adSpacer]])
 

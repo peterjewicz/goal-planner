@@ -16,7 +16,7 @@
   :flex-direction "column"
   :justify-content "center"
   :top 0
-  :left 0
+  :left "-2000px"
   :z-index -999})
 
 (defn update-passed-store [type val store]
@@ -51,11 +51,13 @@
 
 (defn open-datepicker []
   (let [bodyElem (.getElementById js/document "datepicker")]
-    (aset  (.-style bodyElem) "z-index" "900")))
+    (aset  (.-style bodyElem) "z-index" "900")
+    (aset  (.-style bodyElem) "left" "0")))
 
 (defn close-datepicker []
   (let [bodyElem (.getElementById js/document "datepicker")]
-    (aset  (.-style bodyElem) "z-index" "-999")))
+    (aset  (.-style bodyElem) "z-index" "-999")
+    (aset  (.-style bodyElem) "left" "-2000px")))
 
 (defn generate-html [store date]
   [:div#datepicker {:style defaultStyles}
@@ -79,6 +81,7 @@
     (fn []
       [:div
         [:input {:type "text"
+                 :readOnly true
                  :value (str (:month (:end @store)) " " (:day (:end @store)) ", " (:year (:end @store)))
                  :on-click #(open-datepicker)}]
         (generate-html store date)])))
