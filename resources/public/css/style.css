@@ -33,6 +33,11 @@ h4 {font-size: 1.25rem;}
 
 .Main {
   position: relative;
+  overflow: hidden;
+}
+
+.Main.do-scroll {
+  overflow: scroll;
 }
 
 .View {

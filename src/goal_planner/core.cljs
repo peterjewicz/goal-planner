@@ -13,10 +13,16 @@
 
 (api/get-initial-data) ; grabs the initial data from storage
 
+(defn get-scroll-mode [activeView]
+  "set the scroll for specific pages that will overflow - makes a more consistent experience"
+  (if (and (not (:newgoal activeView))  (and (not (:history activeView))))
+    "do-scroll"
+    ""
+  ))
+
 ;; define your app data so that it doesn't get over-written on reload
-; TODO we need to do a check to figure out if we are in scroll mode herer
 (defn Main []
-  [:div.Main
+  [:div.Main {:class (get-scroll-mode (:activeView @state))}
    [home/render state]
    [newgoal/render state]
    [goalPage/render state]
