@@ -76,25 +76,26 @@
           [:div.header__imageWrapper {:on-click #(handle-state-change "update-current-view" "home")}
             [:img.backButton {:src "back.png"}]]
           [:p "Add New Goal"]]
-        [:h2 "I Want To..."]
-        [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
-        [:h3.borderText "Goal Completion"]
-        [:input {:type "number" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
-        [:h3.borderText "Due Date"]
-        [datepicker/datepicker details]
-        ; DISABLE MILESTONES FOR NOW we can bring them back later if they make sense
-        ; [:div.milestonesWrapper
-        ;   [:h3.borderText "Milestones"]
-        ;   (if (<  0 (count (:criteria @details)))
-        ;     (let [milestones (:milestones @details)]
-        ;       (doall (map-indexed (fn [index milestone]
-        ;         [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
-        ;           [:input.milestoneDate {:type "text" :on-change #(update-milestone-date index details (-> % .-target .-value)) :defaultValue (:date milestone)}]
-        ;           [:input.milestoneValue {:type "text" :on-change #(update-milestone-value index details (-> % .-target .-value)) :defaultValue (:value milestone)}]
-        ;           [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
-        ;       ) milestones))))
-        ;   (if (<  0 (count (:criteria @details))) ; TODO make this wrapped in the one above
-        ;     [:button.addMilestone.secondary {:on-click #(add-milestone details)} "+"])]
-        [:button.primary.saveGoal {:on-click #(save-goal details)} "Save Goal"]])))
+        [:div.New.content
+          [:h2 "I Want To..."]
+          [:input {:type "Text" :placeholder "Goal Name" :value (:title @details) :on-change #(swap! details conj {:title (-> % .-target .-value)})}]
+          [:h3.borderText "Goal Completion"]
+          [:input {:type "number" :placeholder "End Criteria" :value (:criteria @details) :on-change #(generate-default-milestones details (-> % .-target .-value))}]
+          [:h3.borderText "Due Date"]
+          [datepicker/datepicker details]
+          ; DISABLE MILESTONES FOR NOW we can bring them back later if they make sense
+          ; [:div.milestonesWrapper
+          ;   [:h3.borderText "Milestones"]
+          ;   (if (<  0 (count (:criteria @details)))
+          ;     (let [milestones (:milestones @details)]
+          ;       (doall (map-indexed (fn [index milestone]
+          ;         [:div.milestoneItem {:key (str index "-" (:value milestone))} ;we append the value here so the dispaly updates otherwise the same key renders the same content
+          ;           [:input.milestoneDate {:type "text" :on-change #(update-milestone-date index details (-> % .-target .-value)) :defaultValue (:date milestone)}]
+          ;           [:input.milestoneValue {:type "text" :on-change #(update-milestone-value index details (-> % .-target .-value)) :defaultValue (:value milestone)}]
+          ;           [:p.removeMilestone {:on-click #(remove-milestone details index)} "-"]]
+          ;       ) milestones))))
+          ;   (if (<  0 (count (:criteria @details))) ; TODO make this wrapped in the one above
+          ;     [:button.addMilestone.secondary {:on-click #(add-milestone details)} "+"])]
+          [:button.primary.saveGoal {:on-click #(save-goal details)} "Save Goal"]]])))
 
 

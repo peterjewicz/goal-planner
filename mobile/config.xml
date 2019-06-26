@@ -23,6 +23,25 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <icon density="mdpi" height="1024" platform="ios" src="res/icon/ios/icon.png" width="1024" />
+    <icon density="mdpi" height="120" platform="ios" src="res/icon/ios/Icon-60@2x.png" width="120" />
+    <icon density="mdpi" height="114" platform="ios" src="res/icon/ios/icon-57-2x.png" width="114" />
+    <icon density="mdpi" height="57" platform="ios" src="res/icon/ios/icon-57.png" width="57" />
+    <icon density="mdpi" height="144" platform="ios" src="res/icon/ios/icon-72-2x.png" width="144" />
+    <icon density="mdpi" height="72" platform="ios" src="res/icon/ios/icon-72.png" width="72" />
+    <icon density="mdpi" height="180" platform="ios" src="res/icon/ios/Icon-App-60x60@3x.png" width="180" />
+    <icon density="mdpi" height="29" platform="ios" src="res/icon/ios/Icon-App-29x29@1x.png" width="29" />
+    <icon density="mdpi" height="58" platform="ios" src="res/icon/ios/Icon-App-29x29@2x.png" width="58" />
+    <icon density="mdpi" height="87" platform="ios" src="res/icon/ios/Icon-App-29x29@3x.png" width="87" />
+    <icon density="mdpi" height="40" platform="ios" src="res/icon/ios/Icon-App-40x40@1x.png" width="40" />
+    <icon density="mdpi" height="80" platform="ios" src="res/icon/ios/Icon-App-40x40@2x.png" width="80" />
+    <icon density="mdpi" height="76" platform="ios" src="res/icon/ios/Icon-76.png" width="76" />
+    <icon density="mdpi" height="152" platform="ios" src="res/icon/ios/Icon-76@2x.png" width="152" />
+    <icon density="mdpi" height="167" platform="ios" src="res/icon/ios/Icon-83.5@2x.png" width="167" />
+    <icon density="mdpi" height="40" platform="ios" src="res/icon/ios/Icon-App-20x20@2x.png" width="40" />
+    <icon density="mdpi" height="20" platform="ios" src="res/icon/ios/Icon-App-20x20@1x.png" width="20" />
+    <icon density="mdpi" height="100" platform="ios" src="res/icon/ios/Icon-App-50x50@2x.png" width="100" />
+    <icon density="mdpi" height="50" platform="ios" src="res/icon/ios/Icon-App-50x50@1x.png" width="50" />
     <preference name="DisallowOverscroll" value="true" />
     <plugin name="cordova-plugin-admobpro" spec="^2.37.2" />
     <plugin name="cordova-plugin-sqlite-2" spec="^1.0.6" />

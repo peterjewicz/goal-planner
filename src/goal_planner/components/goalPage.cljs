@@ -25,6 +25,16 @@
   "calls the API to delete a goal"
   (api/delete-goal goal))
 
+(defn archive-goal [goal]
+  "archie goal hides the goal from view but keeps its stats"
+  (api/archive-goal goal))
+
+(defn display-note-text [note]
+  "conditionally shows the '-' or not if no note"
+  (if (> (count note) 0)
+    (str " - " note)
+    ""))
+
 
 (defn render [state]
   (let [
@@ -36,23 +46,33 @@
             [:div.header__imageWrapper {:on-click #(handle-state-change "update-current-view" "home")}
               [:img.backButton {:src "back.png"}]]
             [:p (:title goal)]]
-          [:div.GoalPage.titleWrapper
-            [:h2.GoalPage.title (:title goal)]
-            [badge/render goal]]
-          [:p.GoalPage.DueDate (str "Complete By: " (:month (:end goal)) " " (:day (:end goal)) ", " (:year (:end goal)))]
-          [:p.GoalPage.total (str "Goal: " (:criteria goal))]
-          [:div.GoalPage.progress.currentProgess
-            [:h3.borderText "Current Progess"]
-            (doall (for [progress (:progress goal)]
-              [:div.GoalPage.progress.progressItem {:key (str (:value progress) "-" (:date progress) )}
-                [:p (str "Amount: "(:value progress) (gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;") "On: "  (:date progress) " - " (:note progress))]
-              ]))]
-          [:div.GoalPage.progress
-            [:div.GoalPage.progress.addProgress
-              [:h3.borderText "Add Progress"]
-              [:input {:type "text" :placeholder "Progress" :value (:value @progress) :on-change #(swap! progress conj {:value (-> % .-target .-value)})}]
-              [:input {:type "text" :placeholder "Note" :value (:note @progress) :on-change #(swap! progress conj {:note (-> % .-target .-value)})}]
-              [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]
-          [:p.delete "This action is permanent!"]
-          [:button.danger {:on-click #(delete-goal goal)} "Delete"]
-          [:div.adSpacer]]))))
+          [:div.GoalPage.content
+            [:div.GoalPage.titleWrapper
+              [:h2.GoalPage.title (:title goal)]
+              [badge/render goal]]
+            [:p.GoalPage.DueDate (str "Complete By: " (:month (:end goal)) " " (:day (:end goal)) ", " (:year (:end goal)))]
+            [:p.GoalPage.total (str "Goal: " (:criteria goal))]
+            [:div.GoalPage.progress.currentProgess
+              [:h3.borderText "Current Progess"]
+              (doall (for [progress (:progress goal)]
+                [:div.GoalPage.progress.progressItem {:key (str (:value progress) "-" (rand-int 10000) )}
+                  [:p (str "Amount: "(:value progress)
+                      (gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")
+                      (gstring/unescapeEntities "&nbsp;")(gstring/unescapeEntities "&nbsp;")
+                      (gstring/unescapeEntities "&nbsp;") "On: "  (:date progress)
+                      (display-note-text (:note progress)))]]))]
+            [:div.GoalPage.progress
+              [:div.GoalPage.progress.addProgress
+                [:h3.borderText "Add Progress"]
+                [:input {:type "text" :placeholder "Progress" :value (:value @progress) :on-change #(swap! progress conj {:value (-> % .-target .-value)})}]
+                [:input {:type "text" :placeholder "Note" :value (:note @progress) :on-change #(swap! progress conj {:note (-> % .-target .-value)})}]
+                [:button.primary {:on-click #(add-progress goal progress) :style {:display "block"}} "Save Progres"]]]
+            [:div.GoalPage.deleteWrapper
+              [:div.Goalpage.deleteWrapper.buttonWrapper
+                [:button.danger {:on-click #(delete-goal goal)} "Delete"]]
+              [:p.delete "Completely remove a goal and all its stats. This action is permanent!"]]
+            [:div.GoalPage.archiveWrapper
+              [:div.Goalpage.archiveWrapper.buttonWrapper
+                [:button.secondary {:on-click #(archive-goal goal)} "Archive"]]
+              [:p "Archived goals will be hidden from your view but still count on the stats page. Use this to cleanup completed or failed goals."]]
+            [:div.adSpacer]]]))))

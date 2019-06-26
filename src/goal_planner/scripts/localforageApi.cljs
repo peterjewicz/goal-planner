@@ -65,3 +65,19 @@
           {:text "Goal Deleted" :hideAfterN false
            :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
            :buttonProperties {:buttonText "Okay"}}))))))))
+
+(defn archive-goal [goal]
+  (.then (.getItem (.-localforage js/window) "goals") (fn [value]
+    (let [currentStorage (js->clj value :keywordize-keys true)
+          archivedGoal (conj goal {:archived true})]
+      (loop [i 0] ; Little cleaner than doall/for so we only iterate as needed this probably won't get too big anyways
+        (if (= (:title (nth currentStorage i)) (:title goal))
+          (.then (.setItem (.-localforage js/window) "goals" (clj->js (conj (assoc currentStorage i archivedGoal))) (fn []
+            (get-initial-data)
+            (handle-state-change "update-active-goal" {})
+            (handle-state-change "update-current-view" "home")
+            (fancy-alert/fancy-alert
+              {:text "Goal Archived" :hideAfterN false
+               :styles {:background "white;" :border "2px solid #2f8ffb;" :width "300px;" :margin-left "-150px;" :z-index "999;" :color "black;"}
+               :buttonProperties {:buttonText "Okay"}}))))
+          (recur (inc i))))))))

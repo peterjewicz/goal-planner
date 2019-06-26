@@ -17,7 +17,8 @@
       [:p "Your Goals"]]
     (if (= (count (:goals @state)) 0)
       [:h3 {:style {:text-align "center" :font-weight 600}} "No Goals Added"])
-    (doall (for [goal (:goals @state)]
+    (doall (for [goal (:goals @state)
+             :when (not (:archived goal))]
       [:div {:key (:title goal) :on-click #(open-goal-page goal)}
         [goal/render (:title goal) {:current (progressScripts/get-progress (:progress goal)) :criteria (:criteria goal)}] ; TODO we need a way to track progress!
     ]))

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="https://clojurescript.org/images/cljs-logo-icon-32.png">
+  </head>
+  <body>
+    <div id="app">
+      <h2>Loading...</h2>
+    </div>
+    <!-- We Opt to include the loaclforage here as opposed to npm as setting the driver doesn't seem to work outside
+    the deviceready here -->
+    <script src="cordova.js"></script>
+    <script src="fastclick.js"></script>
+    <script src="localforage.min.js"></script>
+    <script src="localforage-cordovasqlitedriver.js"></script>
+    <script src="js/compiled/goal_planner.js" type="text/javascript"></script>
+    <script>
+      document.addEventListener("deviceready", onDeviceReady, false);
+      function onDeviceReady() {
+        FastClick.attach(document.body);
+
+        localforage.defineDriver(window.cordovaSQLiteDriver).then(function() {
+          return localforage.setDriver([
+            // Try setting cordovaSQLiteDriver if available,
+            window.cordovaSQLiteDriver._driver,
+            // otherwise use one of the default localforage drivers as a fallback.
+            // This should allow you to transparently do your tests in a browser
+            localforage.INDEXEDDB,
+            localforage.WEBSQL,
+            localforage.LOCALSTORAGE
+          ]);
+          }).then(function() {
+             // alert(localforage.driver());
+            // this should alert "cordovaSQLiteDriver" when in an emulator or a device
+          });
+
+        if ( /(android)/i.test(navigator.userAgent) ) {
+          admobid = { // for Android
+            banner: '',
+            interstitial: ''
+          };
+        } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+            admobid = { // for iOS
+              banner: 'ca-app-pub-7918336603285970/8549535794'
+            };
+          } else {
+              admobid = { // for Windows Phone
+                banner: '',
+                interstitial: ''
+              };
+          }
+          AdMob.createBanner({
+            adId: admobid.banner,
+            position: AdMob.AD_POSITION.BOTTOM_CENTER,
+            overlap: true,
+            autoShow : true
+          });
+      }
+    </script>
+  </body>
+</html>

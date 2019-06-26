@@ -131,6 +131,9 @@ button.primary:hover {
 button.secondary {
   background: #2f8ffb;
   color: white;
+  width: 80px;
+  height: 30px;
+  border-radius: 16px;
   text-align: center;
   border: none;
   transition: all .25s;
@@ -364,12 +367,26 @@ button.danger:hover {
   padding: 12px 0;
 }
 
-.GoalPage .delete {
-  margin-top: 96px;
-}
-
 .GoalPage button.danger {
   margin-top: 8px;
+}
+
+.GoalPage.archiveWrapper {
+  display: flex;
+  padding-top: 36px;
+}
+
+.GoalPage.archiveWrapper p {
+  padding-left: 16px;
+}
+
+.GoalPage.deleteWrapper {
+  display: flex;
+  padding-top: 96px;
+}
+
+.GoalPage.deleteWrapper p {
+  padding-left: 16px;
 }
 
 
@@ -407,4 +424,16 @@ button.danger:hover {
 
 .History.header p, .History.header .header__imageWrapper {
   width: 33%;
+}
+
+
+
+
+/* *******MOBILE STYLES******* */
+
+@media(min-width: 768px) {
+  .New.content, .GoalPage.content {
+    margin: 0 auto;
+    width: 260px;
+  }
 }
