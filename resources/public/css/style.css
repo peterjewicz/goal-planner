@@ -1,5 +1,13 @@
 /* some style */
+@font-face {
+  font-family: OpenSans;
+	src: url('OpenSans-Regular.ttf');
+}
 
+@font-face {
+  font-family: OpenSansBold;
+	src: url('OpenSans-SemiBold.ttf');
+}
 
 
 
@@ -13,7 +21,7 @@ html, body {
   color: #474747;
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'OpenSans', sans-serif;
 }
 
 #app, .Main {
@@ -21,6 +29,7 @@ html, body {
 }
 
 h1,h2,h3,h4 {
+  font-family: OpenSansBold;
   font-weight: 600;
   margin-top: 16px;
   margin-bottom: 8px;
@@ -170,6 +179,7 @@ button.danger:hover {
 /* HOME PAGE STYLES */
 .Home.header {
   text-align: center;
+  font-family: OpenSansBold;
   font-weight: 600;
   display: flex;
 }
@@ -219,6 +229,7 @@ button.danger:hover {
 }
 .New.header p {
   text-align: center;
+  font-family: OpenSansBold;
   font-weight: 600;
 }
 
@@ -328,15 +339,10 @@ button.danger:hover {
   width: 33%;
 }
 
-/* .GoalPage.header p:not(:first-of-type) {
-  text-align: center;
-  font-weight: 600;
-  text-transform: capitalize;
-} */
-
 .GoalPage.header p {
   width: 33%;
   text-align: center;
+  font-family: OpenSansBold;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -419,6 +425,7 @@ button.danger:hover {
 
 .History.header p {
   text-align: center;
+  font-family: OpenSansBold;
   font-weight: 600;
 }
 

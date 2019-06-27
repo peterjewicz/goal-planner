@@ -2,6 +2,8 @@
   (:require [reagent.core :as reagent :refer [atom]]
             ["moment" :as moment]))
 
+; TODO we can probably use moment to get this and then offer the option for
+; March or Mar - something like that
 (defonce months ["January" "February" "March" "April" "May"
                  "June" "July" "August" "September" "October"
                  "November" "December"])
