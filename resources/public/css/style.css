@@ -359,6 +359,7 @@ button.danger:hover {
 .GoalPage.titleWrapper .Badge {
   position: relative;
   top: 18px;
+  white-space: nowrap;
 }
 
 .GoalPage.DueDate {
